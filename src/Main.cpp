@@ -24,8 +24,8 @@ Uint32 PushUpdateEvent(Uint32 interval, void *param) {
 }
 
 SFError InitGraphics() {
-  Uint32 width = 300;
-  Uint32 height = 800;
+  Uint32 width = 720;
+  Uint32 height = 1000;
 
   // Initialise SDL - when using C/C++ it's common to have to
   // initialise libraries by calling a function within them.
@@ -69,7 +69,7 @@ int main(int arc, char ** argv) {
 
 
   // Colour Background
-  SDL_SetRenderDrawColor(g_renderer, 255, 255, 0, 255); // Yellow color
+  //SDL_SetRenderDrawColor(g_renderer, 255, 255, 0, 255); // Yellow color
 
 
 

@@ -21,7 +21,7 @@ using namespace std;
  * enum to mark the type of the SFAsset.  If we add more asset types then
  * the subclassing strategy becomes a better option.
  */
-enum SFASSETTYPE {SFASSET_DEAD, SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_ALIEN, SFASSET_COIN, SFASSET_SMOKE, SFASSET_BARRIER1};
+enum SFASSETTYPE {SFASSET_DEAD,SFASSET_GAMEOVER,SFASSET_BACKGROUND, SFASSET_PLAYER, SFASSET_PROJECTILE, SFASSET_CAR, SFASSET_COIN, SFASSET_WOOD,SFASSET_TOPB,SFASSET_SIDEB,SFASSET_TRUCK, SFASSET_PLAINE};
 
 class SFAsset {
 public:
@@ -33,18 +33,35 @@ public:
   virtual Point2    GetPosition();
   virtual SFAssetId GetId();
   virtual void      OnRender();
+  //movement
   virtual void      GoEast();
+  virtual void      GoEast2();
   virtual void      GoWest();
+  virtual void      GoWest2();
   virtual void      GoSouth();
   virtual void      GoNorth();
+  virtual void 		CoinUp();
+
+  virtual void 		ProjectileMovement();
+  virtual void 		ProjectileMovement2();
+
+  virtual void		AlienW();
+  virtual void		AlienE();
+
+  //status
   virtual void      SetNotAlive();
   virtual bool      IsAlive();
+  //collision
+  virtual void      SideCollision();
   virtual void      HandleCollision();
-  virtual void  	PlayerCoin();
-  virtual void 		PlayerAlien();
-  virtual void 		CoinUp();
-  virtual void 		CoinDown();
-  virtual void 		ProjectileMovement();
+ // virtual void      HandleCollisionT();
+  //virtual void  	PlayerCoin();
+  //virtual void 		PlayerAlien();
+  virtual void 		WoodCollision();
+
+
+  virtual int		getAssetWidth();
+  virtual int		getAssetHeight();
 
 
   virtual bool                      CollidesWith(shared_ptr<SFAsset>);

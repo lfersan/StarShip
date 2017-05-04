@@ -28,23 +28,45 @@ public:
   void    OnRender();
 
   void    FireProjectile();
+  void    FireProjectile2();
+  void    GameOver();
 private:
   bool                    is_running;
 
   shared_ptr<SFWindow>       sf_window;
+  shared_ptr<SFAsset>  gameover;
 
   shared_ptr<SFAsset>        player;
   shared_ptr<SFBoundingBox>  app_box;
   list<shared_ptr<SFAsset> > projectiles;
-  list<shared_ptr<SFAsset> > aliens;
+  list<shared_ptr<SFAsset> > projectiles2;
+
+  list<shared_ptr<SFAsset> > cars;
+  list<shared_ptr<SFAsset> > cars2;
+
+  list<shared_ptr<SFAsset> > trucks;
+  list<shared_ptr<SFAsset> > trucks2;
+
   list<shared_ptr<SFAsset> > coins;
-  shared_ptr<SFAsset>  smoke;
-  shared_ptr<SFAsset>  barrier1;
-  //shared_ptr<SFAsset>  alien1;
+
+  list<shared_ptr<SFAsset> > woods1;
+  list<shared_ptr<SFAsset> > woods2;
+  list<shared_ptr<SFAsset> > woods3;
+
+  list<shared_ptr<SFAsset> > plaines;
+  shared_ptr<SFAsset>  boss;
+
+  shared_ptr<SFAsset>  topB;
+  shared_ptr<SFAsset>  rightB;
+  shared_ptr<SFAsset>  leftB;
+  shared_ptr<SFAsset>  background;
+
 
 
   int fire;
+  int lives;
   int score;
+  int fire2;
 
 };
 #endif

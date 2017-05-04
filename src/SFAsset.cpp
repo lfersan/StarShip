@@ -6,25 +6,40 @@ SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type)
   this->id   = ++SFASSETID;
 
   switch (type) {
+  case SFASSET_GAMEOVER:
+      sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/gameover.png");
+      break;
+  case SFASSET_TOPB:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/topB.png");
+    break;
+  case SFASSET_BACKGROUND:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/background.png");
+    break;
+
   case SFASSET_PLAYER:
     sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/player.png");
     break;
   case SFASSET_PROJECTILE:
     sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/projectile.png");
     break;
-  case SFASSET_ALIEN:
-    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/alien.png");
+  case SFASSET_CAR:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/car.png");
+    break;
+  case SFASSET_PLAINE:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/plaine.png");
     break;
   case SFASSET_COIN:
     sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/coin.png");
     break;
-  case SFASSET_SMOKE:
-      sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/smoke.gif");
-      break;
-
-    case SFASSET_BARRIER1:
-        sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/barrier1.png");
-        break;
+  case SFASSET_WOOD:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/log.png");
+    break;
+  case SFASSET_SIDEB:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/barrier2.png");
+    break;
+  case SFASSET_TRUCK:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/truck.png");
+    break;
     }
 
 
@@ -102,6 +117,13 @@ void SFAsset::OnRender() {
   SDL_RenderCopy(sf_window->getRenderer(), sprite, NULL, &rect);
 }
 
+int SFAsset::getAssetWidth(){
+	return (bbox->extent_x->getX()*2);
+}
+
+int SFAsset::getAssetHeight(){
+	return (bbox->extent_y->getY()*2);
+}
 
 void SFAsset::GoWest() {
   Vector2 c = *(bbox->centre) + Vector2(-8.0f, 0.0f);
@@ -111,15 +133,32 @@ void SFAsset::GoWest() {
   }
 }
 
+void SFAsset::GoWest2() {
+  Vector2 c = *(bbox->centre) + Vector2(-15.0f, 0.0f);
+
+  		  bbox->centre.reset();
+  		  bbox->centre = make_shared<Vector2>(c);
+
+}
+
 void SFAsset::GoEast() {
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
-
   Vector2 c = *(bbox->centre) + Vector2(8.0f, 0.0f);
   	  if(!((c.getX()+bbox->extent_x->getX()) > w)) {
   		  bbox->centre.reset();
   		  bbox->centre = make_shared<Vector2>(c);
   }
+}
+
+void SFAsset::GoEast2() {
+  int w, h;
+  SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
+  Vector2 c = *(bbox->centre) + Vector2(15.0f, 0.0f);
+
+  		  bbox->centre.reset();
+  		  bbox->centre = make_shared<Vector2>(c);
+
 }
 
 void SFAsset::GoNorth() {
@@ -132,14 +171,6 @@ void SFAsset::GoNorth() {
    }
   }
 
-void SFAsset::ProjectileMovement() {
-	  Vector2 c = *(bbox->centre) + Vector2(0.0f, 6.0f);
-	  bbox->centre.reset();
-	  bbox->centre = make_shared<Vector2>(c);
-	}
-
-
-
 void SFAsset::GoSouth() {
 	  Vector2 c = *(bbox->centre) + Vector2(0.0f, -8.0f);
 	  	  if(!((c.getY()-bbox->extent_y->getY()) < 0)) {
@@ -148,28 +179,50 @@ void SFAsset::GoSouth() {
 	  	  }
 }
 
+void SFAsset::ProjectileMovement() {
+	  Vector2 c = *(bbox->centre) + Vector2(0.0f, 6.0f);
+	  bbox->centre.reset();
+	  bbox->centre = make_shared<Vector2>(c);
+	}
+
+void SFAsset::ProjectileMovement2() {
+	  Vector2 c = *(bbox->centre) + Vector2(0.0f, -8.0f);
+	  bbox->centre.reset();
+	  bbox->centre = make_shared<Vector2>(c);
+	}
+
+
+void  SFAsset::AlienW(){
+	  int w, h;
+	  SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
+	  Vector2 c = *(bbox->centre) + Vector2(-2.0f, 0.0f);
+	  		  bbox->centre.reset();
+	  		  bbox->centre = make_shared<Vector2>(c);
+
+}
+
+void  SFAsset::AlienE(){
+	  int w, h;
+	  SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
+	  Vector2 c = *(bbox->centre) + Vector2(2.0f, 0.0f);
+	  		  bbox->centre.reset();
+	  		  bbox->centre = make_shared<Vector2>(c);
+
+}
+
+
 void SFAsset::CoinUp() {
 
 	// if (goUp) goUp();
 	// else goDown();
-
-
 	  int w, h;
 	  SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
-	  Vector2 c = *(bbox->centre) + Vector2(0.0f, 0.5f);
+	  Vector2 c = *(bbox->centre) + Vector2(0.0f, 0.4f);
 	  	  if(!((c.getY()+bbox->extent_y->getY()) > h)) {
 	  		  bbox->centre.reset();
 	  		  bbox->centre = make_shared<Vector2>(c);
 	   }
 	  }
-
-void SFAsset::CoinDown() {
-	  Vector2 c = *(bbox->centre) + Vector2(0.0f, -0.5f);
-	  	  if(!((c.getY()-bbox->extent_y->getY()) < 0)) {
-	  		  bbox->centre.reset();
-	  		  bbox->centre = make_shared<Vector2>(c);
-	  	  }
-	}
 
 
 bool SFAsset::CollidesWith(shared_ptr<SFAsset> other) {
@@ -192,22 +245,20 @@ bool SFAsset::IsAlive() {
 }
 
 void SFAsset::HandleCollision() {
-  if(SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
+  if(SFASSET_PROJECTILE == type || SFASSET_TRUCK == type  ||  SFASSET_CAR == type || SFASSET_PLAYER == type || SFASSET_COIN == type || SFASSET_PLAINE == type ) {
     SetNotAlive();
   }
 }
 
- void SFAsset::PlayerCoin() {
-   if(SFASSET_PLAYER == type || SFASSET_COIN == type) {
-	   SetNotAlive();
-   }
- }
 
- void SFAsset::PlayerAlien() {
-    if(SFASSET_PLAYER == type || SFASSET_ALIEN == type) {
-       SetNotAlive();
-    }
- }
+void SFAsset::SideCollision() {
+  if(SFASSET_PLAINE == type || SFASSET_SIDEB == type || SFASSET_TOPB == type||SFASSET_WOOD ==type || SFASSET_CAR == type ){
+    IsAlive();
+  }
+}
 
-
-
+void SFAsset::WoodCollision() {
+  if(SFASSET_PLAYER == type || SFASSET_WOOD == type ) {
+	   IsAlive();
+  }
+}
